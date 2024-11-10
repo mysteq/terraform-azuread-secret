@@ -1,8 +1,3 @@
-variable "name" {
-  description = "The name of the secret to rotate"
-  type        = string
-}
-
 variable "type" {
   description = "(Optional) The type of the secret to rotate. Can be of type 'password' or 'certificate'. Defaults to 'password'."
   type        = string
@@ -21,14 +16,14 @@ variable "destination" {
   default     = "keyvault"
 }
 
-variable "client_id"{
+variable "client_id" {
   type        = string
   description = "The application id of the app registration to create a client secret for"
 }
 
 variable "rotation_days" {
   type        = number
-  description = "Rotate secret every x days"
+  description = "(Optional) The number of days to wait before rotating the secret. Defaults to 180."
   default     = 180
 }
 
@@ -36,7 +31,7 @@ variable "rotation_days" {
 variable "key_vault_id" {
   type        = string
   description = "Id of the keyvault to put the secrets in"
-  default = null
+  default     = null
 }
 
 variable "key_vault_secret_name" {

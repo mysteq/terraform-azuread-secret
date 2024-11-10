@@ -14,6 +14,12 @@ variable "client_secret" {
   sensitive   = true
 }
 
+variable "expiration_date" {
+  type        = string
+  description = "(Optional) The expiration date of the secret."
+  default     = null
+}
+
 variable "key_vault_id" {
   type        = string
   description = "Id of the keyvault to put the secrets in."
