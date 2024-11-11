@@ -41,20 +41,31 @@ variable "key_vault_secret_name" {
 }
 
 # Azure DevOps Variable Group specific variables
-variable "devops_project_name" {
-  type        = string
-  description = "The Azure DevOps project name, output from the azuredevops_project resource."
-  default     = null
-}
-
 variable "devops_project_id" {
   type        = string
   description = "The Azure DevOps project id, output from the azuredevops_project resource."
   default     = null
 }
 
-variable "variable_group_name" {
+variable "devops_variable_group_name" {
   type        = string
   description = "The name of the service connection in Azure DevOps"
   default     = null
+}
+
+# For type certificate spesific variables
+variable "certificate_secret_name" {
+  type        = string
+  description = "The name of the clientcertificate secret"
+  default     = "clientcertificate"
+}
+
+variable "certificate_password_secret_name" {
+  type        = string
+  description = "The name of the clientcertificate secret"
+  default     = "clientcertificatepassword"
+}
+
+variable "certificate_common_name_fqdn" {
+  type = string
 }
