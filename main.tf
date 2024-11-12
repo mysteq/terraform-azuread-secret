@@ -2,13 +2,13 @@
 resource "time_static" "init" {}
 
 resource "time_rotating" "schedule1" {
-  rotation_minutes = var.rotation_days * 2
+  rotation_minutes = var.rotation_type == "overlap" ? var.rotation_days * 2 : var.rotation_days
 }
 
 resource "time_rotating" "schedule2" {
   for_each      = var.rotation_type == "overlap" ? toset(["schedule"]) : toset([])
   rfc3339       = timecmp(timestamp(), timeadd(time_static.init.rfc3339, "5m")) == 1 ? time_rotating.schedule1.rotation_rfc3339 : null
-  rotation_days = var.rotation_days
+  rotation_minutes = var.rotation_days
 
   lifecycle {
     ignore_changes = [rfc3339]
@@ -71,5 +71,5 @@ module "azurekeyvault" {
   clientid_secret_name     = "${var.key_vault_secret_name}-clientid"
   clientsecret_secret_name = "${var.key_vault_secret_name}-clientsecret"
   tenantid_secret_name     = "${var.key_vault_secret_name}-tenantid"
-  expiration_date          = var.type == "password" && var.rotation_type == "overlap" ? time_rotating.schedule1.unix > time_rotating.schedule2["schedule"].unix ? azuread_application_password.key1["password"].end_date : azuread_application_password.key2["password"].end_date : var.type == "password" ? azuread_application_password.key1["password"].end_date : null
+  expiration_date          = var.key_vault_secret_expiration_date_enabled ? (var.type == "password" && var.rotation_type == "overlap" ? (time_rotating.schedule1.unix > time_rotating.schedule2["schedule"].unix ? azuread_application_password.key1["password"].end_date : azuread_application_password.key2["password"].end_date) : (var.type == "password" ? azuread_application_password.key1["password"].end_date : null)) : null
 }

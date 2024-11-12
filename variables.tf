@@ -24,7 +24,7 @@ variable "client_id" {
 variable "rotation_days" {
   type        = number
   description = "(Optional) The number of days to wait before rotating the secret. Defaults to 180."
-  default     = 180
+  default     = 10
 }
 
 # Key Vault specific variables
@@ -40,7 +40,19 @@ variable "key_vault_secret_name" {
   default     = null
 }
 
+variable "key_vault_secret_expiration_date_enabled" {
+  type        = bool
+  description = "Enable expiration date for the key vault secret"
+  default     = true
+}
+
 # Azure DevOps Variable Group specific variables
+variable "devops_project_name" {
+  type        = string
+  description = "The Azure DevOps project name"
+  default     = null
+}
+
 variable "devops_project_id" {
   type        = string
   description = "The Azure DevOps project id, output from the azuredevops_project resource."
@@ -67,5 +79,7 @@ variable "certificate_password_secret_name" {
 }
 
 variable "certificate_common_name_fqdn" {
-  type = string
+  type        = string
+  description = "The common name of the certificate"
+  default     = null
 }
