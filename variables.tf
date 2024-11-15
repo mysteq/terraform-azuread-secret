@@ -27,6 +27,30 @@ variable "rotation_days" {
   default     = 10
 }
 
+variable "secret_name_prefix" {
+  type        = string
+  description = "(Optional) The prefix of the secrets names. Either this or the individual values need to be set."
+  default     = null
+}
+
+variable "clientid_secret_name" {
+  type        = string
+  description = "(Optional) The name of the clientid key vault secret."
+  default     = null
+}
+
+variable "clientsecret_secret_name" {
+  type        = string
+  description = "(Optional) The name of the clientsecret key vault secret."
+  default     = null
+}
+
+variable "tenantid_secret_name" {
+  type        = string
+  description = "(Optional) The name of the tenantid key vault secret."
+  default     = null
+}
+
 # Key Vault specific variables
 variable "key_vault_id" {
   type        = string
@@ -34,16 +58,16 @@ variable "key_vault_id" {
   default     = null
 }
 
-variable "key_vault_secret_name" {
-  type        = string
-  description = "The name of the clientsecret key vault secret"
-  default     = null
-}
-
 variable "key_vault_secret_expiration_date_enabled" {
   type        = bool
   description = "Enable expiration date for the key vault secret"
   default     = true
+}
+
+variable "override_key_vault_secret_expiration_date" {
+  type        = string
+  description = "(Optinal) Override the expiration date for the key vault secret with the following expire time in days. Default the expiration date is set to the same as rotation time, if expiration date is enabled."
+  default     = null
 }
 
 # Azure DevOps Variable Group specific variables
@@ -68,14 +92,14 @@ variable "devops_variable_group_name" {
 # For type certificate spesific variables
 variable "certificate_secret_name" {
   type        = string
-  description = "The name of the clientcertificate secret"
-  default     = "clientcertificate"
+  description = "(Optional) The name of the clientcertificate secret"
+  default     = null
 }
 
 variable "certificate_password_secret_name" {
   type        = string
-  description = "The name of the clientcertificate secret"
-  default     = "clientcertificatepassword"
+  description = "(Optional) The name of the clientcertificate secret"
+  default     = null
 }
 
 variable "certificate_common_name_fqdn" {
@@ -83,3 +107,5 @@ variable "certificate_common_name_fqdn" {
   description = "The common name of the certificate"
   default     = null
 }
+
+# For type password spesific variables
